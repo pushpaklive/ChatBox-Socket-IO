@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>ChatBox</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -11,32 +11,97 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <style>
+        body{
+            background: transparent;
+            background-image: url(static/green.jpg);
+            /* background-image: url(assets/1.jpg); */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+        
         .user{
-          margin: 15%;
-          padding: 100px;;
-          border: 2PX solid #2cba6c;
-          width: 40%;
+            background: transparent;
+            background-image: url(static/silver1.jpg);
+            /* background-image: url(assets/1.jpg); */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 15%;
+            padding: 100px;
+            width: 40%;
+            border-radius: 25px;
       }
 
-      .messages{
+      .messages{        
           margin-top: 30px;
-          margin-left: 30px;
+          margin-left: 60px;
+          padding-left: 20px;
+          
       }
 
       h3{
           color: whitesmoke;
       }
 
-      #message-container{
-          position: relative;
-          margin-top: 20px;
-          margin-left: 30px;
+      #messageDiv{
+          padding-left: 20px;
+          color: black;
+          padding-bottom: 10px;
       }
+
+      #message-container{
+            position: relative;
+            margin-top: 20px;
+            margin-left: 60px;
+      }
+
+      div *:last-child *:last-child {
+          padding-left: 10px;
+          animation-delay: 0.4s;
+      }
+
+      div *:last-child *:last-child {
+          animation: pop-in .3s cubic-bezier(0, 0.9, 0.3, 1.2) forwards;
+          opacity: 0;
+      }
+
+      @keyframes pop-in {
+        0% {
+            opacity: 0;
+            transform: translateY(-4rem) scale(.8);
+        }
+        100% {
+            opacity: 1;
+            transform: none;
+        }
+      }
+
+      .btn-primary{
+          background-color: rgb(7, 96, 212);
+      }
+
+      @media only screen and (max-width: 600px) {
+
+  .user{
+            margin: 0%;
+            padding-top: 10px;
+            width: 100%;
+            border-radius: 25px;
+            background: transparent;
+            background-image:none;
+            /* background-image: url(assets/1.jpg); */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+      }
+}
+
     </style>
     <script>
         var socket = io();
         function setUsername() {
-            alert("setUsername() : name value : " + document.getElementById("name").value);
             socket.emit('setUsername', document.getElementById('name').value);
         };
         var user;
@@ -45,10 +110,10 @@
         });
         socket.on('userSet', function (data) {
             user = data.username;
-           /*  document.body.innerHTML = '<input type = "text" id = "message">\
-         <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
-         <div id = "message-container"></div>'; */
-         document.body.innerHTML = '<nav class="navbar navbar-default bg-primary navbar-fixed-top">\
+            /*  document.body.innerHTML = '<input type = "text" id = "message">\
+          <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
+          <div id = "message-container"></div>'; */
+            document.body.innerHTML = '<nav class="navbar navbar-default bg-primary navbar-fixed-top">\
         <div class="container-fluid">\
             <ul class="nav navbar-nav left">\
                 <li>\
@@ -57,7 +122,7 @@
             </ul>\
         </div>\
     </nav>\
-    <div class="container-fluid">\
+    <div class="container-fluid msgContainer">\
         <div class="input-group messages">\
             <div id="error-container"></div>\
             <span><input type="text" name="message" id="message" class="form-control"></span>\
@@ -74,7 +139,7 @@
         }
         socket.on('newmsg', function (data) {
             if (user) {
-                document.getElementById('message-container').innerHTML += '<div><b>' +
+                document.getElementById('message-container').innerHTML += '<div id="messageDiv" class="animate-pop-in"><b>' +
                     data.user + '</b>: ' + data.message + '</div>'
             }
         })
@@ -84,23 +149,23 @@
 <body>
 
     <nav class="navbar navbar-default bg-success navbar-fixed-top">
-        <div class="container-fluid">
+        <div class="container">
             <ul class="nav navbar-nav left">
                 <li>
-                  <h3>ChatBox</h3>
+                    <h3>ChatBox</h3>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container">
 
         <div class="input-group user">
             <div id="error-container"></div>
-            <span><input type="text" name="name" id="name" class="form-control" placeholder="Enter your name!" value=""></span>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name!" value="">
             <button class="btn btn-success" type="button" name="button" onclick="setUsername()">Let me chat!</button>
         </div>
-        
+
     </div>
 
 </body>

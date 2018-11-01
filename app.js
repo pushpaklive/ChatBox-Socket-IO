@@ -1,9 +1,14 @@
-var app = require('express')();
+var express = require('express');
+var path = require('path');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
+app.use('/static', express.static('assets'));
+
 app.get('/', function (req, res) {
-    res.sendfile('./chat.html');
+    res.sendfile(__dirname+'/chat.html');
 })
 
 /* io.on("connection", function (socket) {
