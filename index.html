@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on('testerEvent', function (data) { console.log(JSON.stringify(data)) });
+
+        //We can also emit event from client to server
+        socket.emit("clientEvent", "Sending event from client to server>>>")
+
+        socket.on('broadcast', function (data) {
+            document.body.innerHTML = '';
+            document.write(data.description);
+        });
+
+        socket.on('newclientconnect', function (data) {
+            document.body.innerHTML = '';
+            document.write(data.description);
+        });
+
+        socket.on('connectToRoom', function (data) {
+            document.body.innerHTML = '';
+            document.write(data);
+        });
+
+        //Custom Namespace //customapp.js
+       /*  var socket = io('/custom');
+        socket.on('hi', function (data) {
+            document.body.innerHTML = '';
+            document.write(data);
+        }); */
+    </script>
+    <title>Hello world</title>
+</head>
+
+<body>Hello world</body>
+
+</html>

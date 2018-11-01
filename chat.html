@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        .user{
+          margin: 15%;
+          padding: 100px;;
+          border: 2PX solid #2cba6c;
+          width: 40%;
+      }
+
+      .messages{
+          margin-top: 30px;
+          margin-left: 30px;
+      }
+
+      h3{
+          color: whitesmoke;
+      }
+
+      #message-container{
+          position: relative;
+          margin-top: 20px;
+          margin-left: 30px;
+      }
+    </style>
+    <script>
+        var socket = io();
+        function setUsername() {
+            alert("setUsername() : name value : " + document.getElementById("name").value);
+            socket.emit('setUsername', document.getElementById('name').value);
+        };
+        var user;
+        socket.on('userExists', function (data) {
+            document.getElementById('error-container').innerHTML = data;
+        });
+        socket.on('userSet', function (data) {
+            user = data.username;
+           /*  document.body.innerHTML = '<input type = "text" id = "message">\
+         <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
+         <div id = "message-container"></div>'; */
+         document.body.innerHTML = '<nav class="navbar navbar-default bg-primary navbar-fixed-top">\
+        <div class="container-fluid">\
+            <ul class="nav navbar-nav left">\
+                <li>\
+                  <h3>ChatBox</h3>\
+                </li>\
+            </ul>\
+        </div>\
+    </nav>\
+    <div class="container-fluid">\
+        <div class="input-group messages">\
+            <div id="error-container"></div>\
+            <span><input type="text" name="message" id="message" class="form-control"></span>\
+            <button class="btn btn-primary" type="button" name="button" onclick="sendMessage()">Send</button><br/></div>\
+            <div id = "message-container"></div>\
+        </div>'
+        });
+        function sendMessage() {
+            var msg = document.getElementById('message').value;
+            if (msg) {
+                socket.emit('msg', { message: msg, user: user });
+                document.getElementById('message').value = "";
+            }
+        }
+        socket.on('newmsg', function (data) {
+            if (user) {
+                document.getElementById('message-container').innerHTML += '<div><b>' +
+                    data.user + '</b>: ' + data.message + '</div>'
+            }
+        })
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default bg-success navbar-fixed-top">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav left">
+                <li>
+                  <h3>ChatBox</h3>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+
+        <div class="input-group user">
+            <div id="error-container"></div>
+            <span><input type="text" name="name" id="name" class="form-control" placeholder="Enter your name!" value=""></span>
+            <button class="btn btn-success" type="button" name="button" onclick="setUsername()">Let me chat!</button>
+        </div>
+        
+    </div>
+
+</body>
+
+</html>
