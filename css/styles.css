@@ -1,6 +1,7 @@
 
   html {
   height: 100%;
+  word-wrap: break-word;  
   }
   body {
   min-height: 100%;
@@ -41,7 +42,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   margin-top: 5%;
-  padding: 150px;
+  padding: 280px;
   width: 60%;
   height: 50%;
   border-radius: 25px;
@@ -49,8 +50,8 @@
 
   #visibleBlock{
   position: relative;
-  padding-left: 0%;
-  margin-left: 0%;
+  left: 10%;
+  top: 10%;
   }
 
   .messages{   
@@ -59,22 +60,13 @@
   margin-left: 60px;
   padding-left: 20px;
   height: 100%;
-
-  }
-
-  h3{
-  position: relative;
-  color: black;
-  font-family: 'Love Ya Like A Sister', cursive;
-  font-weight: 10px;
-  padding-top: 5px;
-  margin-left: 50px;
-  }
+  }  
 
   #messageDiv{
   padding-left: 20px;
   color: black;
   padding-bottom: 10px;
+  word-wrap: break-word;
   }
 
   #message-container{
@@ -102,19 +94,33 @@
   opacity: 1;
   transform: none;
   }
-  }
+  }  
 
-  .btn-primary{
+  h3{
+    position: relative;
+    color: black;
+    font-family: 'Love Ya Like A Sister', cursive;
+    font-weight: 10px;
+    padding-top: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    }
+
+ .btn-primary{
   background-color: rgb(7, 96, 212);
   }
 
   b{
   font-family: 'Special Elite', cursive;
   color:  #2ab680;
+  word-wrap: break-word;
   }
 
   #bold{
   color: black;
+  padding: 4px;
+  background-color: whitesmoke;
+  word-wrap: break-word;
   }
 
   #dot{
@@ -122,7 +128,8 @@
   }
 
   input{
-  border-radius: 50%;
+  border-radius: 10px;
+  margin-top: 5px;
   margin-bottom: 5px;
   }
 
@@ -132,7 +139,6 @@
 
   .btn{
   border-radius: 12px;
-  height: auto;
   }
 
   #error-container{
@@ -141,7 +147,6 @@
 
   .btn-primary{
   margin-left: 5px;
-  height: auto;
   }
 
   .btn-success{
@@ -215,7 +220,7 @@
       
       body{
           background: transparent;
-          background-image: url(../static/blue.jpg);
+          background-image: url(../static/bg3.jpg);
           /* background-image: url(assets/1.jpg); */
           background-size: cover;
           background-repeat: no-repeat;
@@ -266,12 +271,34 @@
       
       }
       
-      b{
+      #user{
       font-family: 'Special Elite', cursive;
-      color:  #2ecc75;
+      color:  #7bebc0;
+      padding: 5px;
+      margin-left: 3px;
+      border-radius: 10px;
+       background-color: rgb(60, 106, 233);
+      word-wrap: break-word;
       }
       
       #bold{
-      color: rgb(226, 229, 238);
-      }         
+      color: black;
+      padding: 5px;
+      margin-left: 3px;
+       background-color: whitesmoke;
+       border-radius: 10px;
+       word-wrap: break-word;
+       position: relative;
+       max-width: 200px;
+      }
+      
+      #messageDiv{
+        display: block;
+        width: 200px;
+        word-wrap: break-word;
+      }
+
+     #newmsg{
+       max-width: 200px;
+     }
       }
