@@ -5,6 +5,10 @@
     <title>ChatBox</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--New-->
+    <link href="https://fonts.googleapis.com/css?family=Chewy|Love+Ya+Like+A+Sister|Special+Elite" rel="stylesheet">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -13,15 +17,21 @@
     <style>
         body{
             background: transparent;
-            background-image: url(static/green.jpg);
+            background-image: url(static/silver1.jpg);
             /* background-image: url(assets/1.jpg); */
-            background-position: center;
+            background-size: 100%;
             background-repeat: no-repeat;
-            background-size: cover;
-            overflow-x: hidden;
+            background-position: left top;
+            overflow-x: hidden;            
+        }
+
+        .container{
+            width: 100%;
+            white-space: nowrap;
         }
         
         .user{
+            position: relative;
             background: transparent;
             background-image: url(static/silver1.jpg);
             /* background-image: url(assets/1.jpg); */
@@ -29,20 +39,34 @@
             background-repeat: no-repeat;
             background-size: cover;
             margin: 15%;
-            padding: 100px;
-            width: 40%;
+            padding: 150px;
+            width: 60%;
             border-radius: 25px;
+            display: flex;
       }
 
-      .messages{        
+      #visibleBlock{
+          position: relative;
+          padding-left: 0%;
+          margin-left: 0%;
+      }
+
+      .messages{   
+          position: relative;     
           margin-top: 30px;
           margin-left: 60px;
           padding-left: 20px;
+          height: 100%;
           
       }
 
       h3{
-          color: whitesmoke;
+          position: relative;
+          color: black;;
+          font-family: 'Love Ya Like A Sister', cursive;
+          font-weight: 10px;
+          padding-top: 5px;
+          margin-left: 50px;
       }
 
       #messageDiv{
@@ -82,20 +106,89 @@
           background-color: rgb(7, 96, 212);
       }
 
-      @media only screen and (max-width: 600px) {
-
-  .user{
-            margin: 0%;
-            padding-top: 10px;
-            width: 100%;
-            border-radius: 25px;
-            background: transparent;
-            background-image:none;
-            /* background-image: url(assets/1.jpg); */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+      b{
+        font-family: 'Special Elite', cursive;
+        color:  #2ab680;
       }
+
+      #bold{
+          color: rgb(9, 10, 14);
+      }
+
+      #dot{
+          color: rgb(29, 127, 207);
+      }
+
+      input{
+          border-radius: 50%;
+          margin-bottom: 5px;
+      }
+
+      .greenbg,.btn-success{
+        background-color: #2cba6c;        
+      }
+
+      .btn{
+        border-radius: 12px;
+      }
+
+      #error-container{
+          color: red;
+      }
+
+/* Media Queries*/
+      @media only screen and (max-width: 900px) {
+
+          body{
+            background: transparent;
+            background-image: url(static/blue.jpg);
+            /* background-image: url(assets/1.jpg); */
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: left top;
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        .user{
+                    margin: 1%;
+                    padding-top: 40px;
+                    padding-left: 40px;
+                    width: 60%;
+                    border-radius: 15px;
+                    background-image:none;
+                    /* background-image: url(assets/1.jpg); */
+            }
+
+        #visibleBlock{
+          position: relative;
+          float: left;
+          left: 10%;
+        }
+
+        #message-container{
+            position: relative;
+            margin-top: 20px;
+            margin-left: 20px;
+      }
+
+       .messages{   
+          position: relative;     
+          margin-top: 30px;
+          margin-left: 20px;
+          padding-left: 20px;
+          height: 100%;
+          
+      }
+
+      b{
+        font-family: 'Special Elite', cursive;
+        color:  #2ecc75;
+      }
+
+      #bold{
+          color: rgb(226, 229, 238);
+      }         
 }
 
     </style>
@@ -113,8 +206,8 @@
             /*  document.body.innerHTML = '<input type = "text" id = "message">\
           <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
           <div id = "message-container"></div>'; */
-            document.body.innerHTML = '<nav class="navbar navbar-default bg-primary navbar-fixed-top">\
-        <div class="container-fluid">\
+            document.body.innerHTML = '<nav class="navbar navbar-default greenbg navbar-fixed-top">\
+        <div class="container">\
             <ul class="nav navbar-nav left">\
                 <li>\
                   <h3>ChatBox</h3>\
@@ -122,13 +215,13 @@
             </ul>\
         </div>\
     </nav>\
-    <div class="container-fluid msgContainer">\
+    <div class="container msgContainer">\
         <div class="input-group messages">\
             <div id="error-container"></div>\
             <span><input type="text" name="message" id="message" class="form-control"></span>\
             <button class="btn btn-primary" type="button" name="button" onclick="sendMessage()">Send</button><br/></div>\
             <div id = "message-container"></div>\
-        </div>'
+        </div>';
         });
         function sendMessage() {
             var msg = document.getElementById('message').value;
@@ -140,7 +233,7 @@
         socket.on('newmsg', function (data) {
             if (user) {
                 document.getElementById('message-container').innerHTML += '<div id="messageDiv" class="animate-pop-in"><b>' +
-                    data.user + '</b>: ' + data.message + '</div>'
+                    data.user + '</b> <b id=\"dot\">:</b>' + "<b id=\"bold\">" + data.message + "</b>" + '</div>'
             }
         })
     </script>
@@ -148,7 +241,7 @@
 
 <body>
 
-    <nav class="navbar navbar-default bg-success navbar-fixed-top">
+    <nav class="navbar navbar-default greenbg navbar-fixed-top">
         <div class="container">
             <ul class="nav navbar-nav left">
                 <li>
@@ -162,8 +255,11 @@
 
         <div class="input-group user">
             <div id="error-container"></div>
-            <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name!" value="">
-            <button class="btn btn-success" type="button" name="button" onclick="setUsername()">Let me chat!</button>
+            <div id="visibleBlock">
+                <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name!" value="">
+
+                <button class="btn btn-success" type="button" name="button" onclick="setUsername()">Let me chat!</button>
+            </div>
         </div>
 
     </div>
