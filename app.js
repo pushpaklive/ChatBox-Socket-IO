@@ -6,6 +6,7 @@ var io = require('socket.io')(http);
 
 
 app.use('/static', express.static('assets'));
+app.use('/styles', express.static('css'));
 
 app.get('/', function (req, res) {
     res.sendfile(__dirname+'/chat.html');
