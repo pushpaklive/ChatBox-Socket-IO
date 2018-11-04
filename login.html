@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ChatBox</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--New-->
+
+    <link href="https://fonts.googleapis.com/css?family=Chewy|Love+Ya+Like+A+Sister|Special+Elite" rel="stylesheet">
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link rel="stylesheet" href="/styles/styles.css">
+    <style>
+    #loginDiv{
+        padding-top: 10%;
+    }
+
+    #submitBtn{
+        margin-left: 10%;
+    }
+
+    .input-group-text{
+        background-color: rgb(33, 64, 189);
+        color: whitesmoke;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div id="loginDiv">
+            <form method="post" action="/canstartchat" enctype="application/x-www-form-urlencoded">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Credentials</span>
+                    </div>
+                    <input type="text" class="form-control" name="user" placeholder="Username">
+                    <input type="password" class="form-control" name="pwd" placeholder="Secret">
+                  </div>
+                          
+                <input type="submit" id="submitBtn" class="btn btn-success" value="Submit">
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
