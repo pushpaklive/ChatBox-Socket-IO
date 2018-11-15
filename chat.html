@@ -5,100 +5,49 @@
     <title>ChatBox</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--New-->
+
+    <link href="https://fonts.googleapis.com/css?family=Chewy|Love+Ya+Like+A+Sister|Special+Elite" rel="stylesheet">
+   
+
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+
+    <link rel="stylesheet" href="/styles/styles.css">
+
     <style>
-        body{
-            background: transparent;
-            background-image: url(static/green.jpg);
-            /* background-image: url(assets/1.jpg); */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            overflow-x: hidden;
+        @keyframes stretch {
+        0%   {background-color: rgb(47, 125, 241);}
+        25%  {background-color:rgb(14, 218, 14); }
+        50%  {background-color:rgb(47, 125, 241);}
+        75%  {background-color:rgb(14, 218, 14); }
+        100% {background-color:rgb(47, 125, 241); }
         }
+
+        #h3 {
+        animation: 
+            stretch
+            5s
+            ease-in
+            1s
+            alternate
+            infinite
+            none
+            running;
+
+        border-top-left-radius: 20%;
+        border-bottom-right-radius: 20%;
         
-        .user{
-            background: transparent;
-            background-image: url(static/silver1.jpg);
-            /* background-image: url(assets/1.jpg); */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            margin: 15%;
-            padding: 100px;
-            width: 40%;
-            border-radius: 25px;
-      }
-
-      .messages{        
-          margin-top: 30px;
-          margin-left: 60px;
-          padding-left: 20px;
-          
-      }
-
-      h3{
-          color: whitesmoke;
-      }
-
-      #messageDiv{
-          padding-left: 20px;
-          color: black;
-          padding-bottom: 10px;
-      }
-
-      #message-container{
-            position: relative;
-            margin-top: 20px;
-            margin-left: 60px;
-      }
-
-      div *:last-child *:last-child {
-          padding-left: 10px;
-          animation-delay: 0.4s;
-      }
-
-      div *:last-child *:last-child {
-          animation: pop-in .3s cubic-bezier(0, 0.9, 0.3, 1.2) forwards;
-          opacity: 0;
-      }
-
-      @keyframes pop-in {
-        0% {
-            opacity: 0;
-            transform: translateY(-4rem) scale(.8);
         }
-        100% {
-            opacity: 1;
-            transform: none;
-        }
-      }
 
-      .btn-primary{
-          background-color: rgb(7, 96, 212);
-      }
-
-      @media only screen and (max-width: 600px) {
-
-  .user{
-            margin: 0%;
-            padding-top: 10px;
-            width: 100%;
-            border-radius: 25px;
-            background: transparent;
-            background-image:none;
-            /* background-image: url(assets/1.jpg); */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-      }
-}
-
+       
     </style>
+
     <script>
         var socket = io();
         function setUsername() {
@@ -113,8 +62,8 @@
             /*  document.body.innerHTML = '<input type = "text" id = "message">\
           <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
           <div id = "message-container"></div>'; */
-            document.body.innerHTML = '<nav class="navbar navbar-default bg-primary navbar-fixed-top">\
-        <div class="container-fluid">\
+            document.body.innerHTML = '<nav class="navbar navbar-default greenbg navbar-fixed-top">\
+        <div class="container">\
             <ul class="nav navbar-nav left">\
                 <li>\
                   <h3>ChatBox</h3>\
@@ -122,13 +71,13 @@
             </ul>\
         </div>\
     </nav>\
-    <div class="container-fluid msgContainer">\
+    <div class="container msgContainer">\
         <div class="input-group messages">\
             <div id="error-container"></div>\
             <span><input type="text" name="message" id="message" class="form-control"></span>\
-            <button class="btn btn-primary" type="button" name="button" onclick="sendMessage()">Send</button><br/></div>\
+            <button class="btn btn-primary btn-sm" type="button" name="button" onclick="sendMessage()">Send</button><br/></div>\
             <div id = "message-container"></div>\
-        </div>'
+        </div>';
         });
         function sendMessage() {
             var msg = document.getElementById('message').value;
@@ -139,8 +88,8 @@
         }
         socket.on('newmsg', function (data) {
             if (user) {
-                document.getElementById('message-container').innerHTML += '<div id="messageDiv" class="animate-pop-in"><b>' +
-                    data.user + '</b>: ' + data.message + '</div>'
+                document.getElementById('message-container').innerHTML += '<div id="messageDiv" class="animate-pop-in"><b id=\"user\">' +
+                    data.user + '</b> <b id=\"dot\">:</b>' + "<b id=\"bold\">" + data.message + "</b>" + '</div>'
             }
         })
     </script>
@@ -148,13 +97,14 @@
 
 <body>
 
-    <nav class="navbar navbar-default bg-success navbar-fixed-top">
-        <div class="container">
-            <ul class="nav navbar-nav left">
+    <nav class="navbar navbar-default bg-warning navbar-fixed-top">
+        <div class="container" id="chatbox">
+            <!-- <ul class="nav navbar-nav left">
                 <li>
-                    <h3>ChatBox</h3>
+                    <div id="h3"><h3 >ChatBox</h3></div>
                 </li>
-            </ul>
+            </ul> -->
+            <div id="h3"><h3 >ChatBox</h3></div>
         </div>
     </nav>
 
@@ -162,11 +112,17 @@
 
         <div class="input-group user">
             <div id="error-container"></div>
-            <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name!" value="">
-            <button class="btn btn-success" type="button" name="button" onclick="setUsername()">Let me chat!</button>
+            <div id="visibleBlock form-group">
+                <input type="text" name="name" id="name" class="form-control" style="width:250px;" placeholder="Name please!" value="">
+
+                <button class="btn btn-success btn-sm" type="button" name="button" id="bounce" onclick="setUsername()">Let me chat!</button>
+            </div>
         </div>
 
+       
     </div>
+
+    
 
 </body>
 

@@ -3,9 +3,12 @@ var path = require('path');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+//For notifications
+var notifier = require('node-notifier');
 
 
 app.use('/static', express.static('assets'));
+app.use('/styles', express.static('css'));
 
 app.get('/', function (req, res) {
     res.sendfile(__dirname+'/chat.html');
@@ -70,12 +73,23 @@ io.on('connection', function(socket) {
          socket.emit('userExists', value + ' username is taken! Try some other username.');
       } else {
          users.push(value);
+         notifier.notify({
+            'title': 'ChatBox',
+            'message': value + " is connected now!"
+          })
+         //notifier.notify(value + " is connected now!")
          socket.emit('userSet', {username: value});
       }
    });
    
    socket.on('msg', function(data) {
       //Send message to everyone
+      notifier.notify({
+        'title': 'ChatBox',
+        'subtitle': 'Internal Chat',
+        'message': "New Message recieved from "+data.user+" : "+data.message
+      })
+      //notifier.notify("New Message recieved from "+data.user+" : "+data.message);
       io.sockets.emit('newmsg', data);
    })
 });
